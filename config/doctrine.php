@@ -1,27 +1,5 @@
 <?php
 
-/**
- * configuration file for kohana-doctrine module
- *
- * you can define you own namespace for "entities" and "proxies"
- *
- * LICENSE: THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
- * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
- * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
- *
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
- * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
- * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE
- * IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
- *
- * @category  module
- * @package   kohana-doctrine
- * @author    gimpe <gimpehub@intljaywalkers.com> Oleg Abrazhaev <seyferseed@mail.ru>
- * @copyright 2011 International Jaywalkers
- * @license   http://creativecommons.org/licenses/by/3.0/ CC BY 3.0
- * @link      http://github.com/seyfer/kohana-doctrine
- */
 use Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter;
 
 return [
@@ -39,13 +17,9 @@ return [
         'mysql'      => 'pdo_mysql',
         'PDO'        => 'pdo_mysql',
         'MySQL'      => 'pdo_mysql',
-        'MySQLi'     => 'mysqli',
+        'mysqli'     => 'mysqli',
         'PDO_MySQL'  => 'pdo_mysql',
         'PDO_MySQLi' => 'mysqli',
-        //'N/A' => 'pdo_pgsql',
-        //'N/A' => 'pdo_sqlite',
-        //'N/A' => 'pdo_oci',
-        //'N/A' => 'oci8',
     ],
     'console_commands'       => [
         // Migrations Commands
@@ -57,7 +31,8 @@ return [
         new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
     ],
     'console_helpers'        => [
-        'dialog' => new \Symfony\Component\Console\Helper\QuestionHelper(),
+        //'question' => new \Symfony\Component\Console\Helper\QuestionHelper(),
+        'dialog' => new \Symfony\Component\Console\Helper\DialogHelper(),
     ],
     'configuration'          => APPPATH . 'config/doctrine.xml',
     'debug'                  => TRUE,

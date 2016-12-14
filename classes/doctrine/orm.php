@@ -1,41 +1,15 @@
 <?php
 
-use \Doctrine\ORM\Configuration;
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\Common\EventManager;
-use \Doctrine\Common\Cache\ArrayCache;
-use \Doctrine\Common\Cache\MemcacheCache;
-use \Doctrine\Common\Cache\ApcCache;
 use \Doctrine\DBAL\Event\Listeners\MysqlSessionInit;
 use \Doctrine\ORM\Mapping\Driver\YamlDriver;
 use \Doctrine\ORM\Mapping\Driver\XmlDriver;
 use \Doctrine\ORM\Mapping\Driver\PHPDriver;
 use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Gedmo\Timestampable\TimestampableListener;
 
-/**
- * creates a Doctrine EntityManager for a specific database group
- *
- * LICENSE: THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
- * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
- * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
- *
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
- * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
- * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE
- * IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
- *
- * @category  module
- * @package   kohana-doctrine
- * @author    gimpe <gimpehub@intljaywalkers.com> Oleg Abrazhaev <seyferseed@mail.ru>
- * @copyright 2011 International Jaywalkers
- * @license   http://creativecommons.org/licenses/by/3.0/ CC BY 3.0
- * @link      http://github.com/seyfer/kohana-doctrine
- */
 class Doctrine_ORM
 {
 
@@ -104,9 +78,9 @@ class Doctrine_ORM
     }
 
     /**
-     * __constructor, you can specify which database group to use (default: 'default')
-     *
+     * Doctrine_ORM constructor.
      * @param string $database_group
+     * @throws Kohana_Database_Exception
      */
     public function __construct($database_group = 'default')
     {
