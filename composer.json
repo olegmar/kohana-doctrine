@@ -1,7 +1,7 @@
 {
     "name": "olegmar/kohana-doctrine",
     "type": "library",
-    "version": "1.0.1",
+    "version": "v1.0.2",
     "authors": [
         {"name": "Martynov Oleg", "email": "ole-martyno@yandex.ru"}
     ],
