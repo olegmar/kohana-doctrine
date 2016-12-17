@@ -6,11 +6,9 @@
         {"name": "Martynov Oleg", "email": "ole-martyno@yandex.ru"}
     ],
     "require": {
-        "doctrine/doctrine-module": "^0.8",
-        "doctrine/doctrine-orm-module": "^0.8",
         "doctrine/orm": "^2.4",
         "doctrine/dbal": "^2.4",
-        "doctrine/migrations": "1.0.0-alpha3",
+        "doctrine/migrations": "dev-master",
         "doctrine/data-fixtures": "v1.0.0",
         "gedmo/doctrine-extensions": "^2.4"
     },
