@@ -2,12 +2,11 @@
 
 /**
  * system and app path for cli
- * @author Oleg Abrazhaev <seyferseed@mail.ru>
  */
-return array(
+return [
     // path
     'application' => '/../../../application',
-    'modules'     => '/../../../modules',
-    'system'      => '/../../../system',
-);
+    'modules' => '/../../../modules',
+    'system' => '/../../../system',
+];
 

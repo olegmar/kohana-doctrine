@@ -5,7 +5,7 @@
         {"name": "Martynov Oleg", "email": "ole-martyno@yandex.ru"}
     ],
     "require": {
-        "doctrine/orm": "^2.4",
+        "doctrine/orm": "^2.7",
         "doctrine/migrations": "^1.4",
         "gedmo/doctrine-extensions": "^2.4"
     },
