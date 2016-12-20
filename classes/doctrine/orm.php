@@ -160,7 +160,7 @@ class Doctrine_ORM
                 'pdo' => $pdo,
                 'dbname' => null
             ];
-        } else {
+        } elseif (isset(self::$doctrineConfig['type_driver_mapping'][$db_config['type']])) {
             // database configuration
             $connectionOptions = [
                 'driver' => self::$doctrineConfig['type_driver_mapping'][$db_config['type']],
@@ -171,6 +171,9 @@ class Doctrine_ORM
                 'password' => $db_config['connection']['password'],
                 'charset' => $db_config['charset'],
             ];
+        } else {
+            $connectionOptions = $db_config['connection'];
+            $connectionOptions['driver'] = 'pdo_sqlite';
         }
 
         // create Entity Manager
