@@ -12,7 +12,6 @@ use Gedmo\Timestampable\TimestampableListener;
 
 class Doctrine_ORM
 {
-
     /**
      * @var array
      */
@@ -95,7 +94,7 @@ class Doctrine_ORM
         // proxy configuration
         $config->setProxyDir(self::$doctrineConfig['proxy_dir']);
         $config->setProxyNamespace(self::$doctrineConfig['proxy_namespace']);
-        $config->setAutoGenerateProxyClasses($isDevMode);
+        $config->setAutoGenerateProxyClasses(true);
 
         foreach (self::$doctrineConfig->get('string_functions', []) as $name => $className) {
             $config->addCustomStringFunction($name, $className);
