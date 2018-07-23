@@ -3,6 +3,7 @@
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\EventManager;
+use Doctrine\Common\Cache\Cache as DoctrineCache;
 use Doctrine\DBAL\Event\Listeners\MysqlSessionInit;
 use Doctrine\ORM\Mapping\Driver\YamlDriver;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
@@ -90,12 +91,15 @@ class Doctrine_ORM
         }
 
         $isDevMode = self::$doctrineConfig['debug'];
-        $config = Setup::createConfiguration($isDevMode);
+        $cache = $this->createCacheInstance();
+        $config = Setup::createConfiguration($isDevMode, self::$doctrineConfig['proxy_dir'], $cache);
 
         // proxy configuration
-        $config->setProxyDir(self::$doctrineConfig['proxy_dir']);
         $config->setProxyNamespace(self::$doctrineConfig['proxy_namespace']);
         $config->setAutoGenerateProxyClasses(true);
+        $config->setMetadataCacheImpl($cache);
+        $config->setQueryCacheImpl($cache);
+        $config->setResultCacheImpl($cache);
 
         foreach (self::$doctrineConfig->get('string_functions', []) as $name => $className) {
             $config->addCustomStringFunction($name, $className);
@@ -104,7 +108,6 @@ class Doctrine_ORM
             $config->addFilter($name, $className);
         }
 
-        $this->initCache($config);
 
         // mappings/metadata driver configuration
         $driver_implementation = null;
@@ -242,11 +245,11 @@ class Doctrine_ORM
     }
 
     /**
-     * @param Configuration $config
+     * @return DoctrineCache
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    private function initCache(Configuration $config)
+    private function createCacheInstance()
     {
         $type = self::$doctrineConfig['cache_implementation'];
         $cache_class = '\Doctrine\Common\Cache\\' . $type . 'Cache';
@@ -268,8 +271,7 @@ class Doctrine_ORM
         if ($cache_namespace = self::$doctrineConfig['cache_namespace']) {
             $cache_implementation->setNamespace($cache_namespace);
         }
-        $config->setMetadataCacheImpl($cache_implementation);
-        $config->setQueryCacheImpl($cache_implementation);
-        $config->setResultCacheImpl($cache_implementation);
+
+        return $cache_implementation;
     }
 }
