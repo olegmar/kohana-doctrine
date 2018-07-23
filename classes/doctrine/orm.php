@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Event\Listeners\MysqlSessionInit;
@@ -103,17 +104,7 @@ class Doctrine_ORM
             $config->addFilter($name, $className);
         }
 
-        // caching configuration
-        $cache_class = '\Doctrine\Common\Cache\\' . self::$doctrineConfig['cache_implementation'];
-        $cache_implementation = new $cache_class;
-
-        // set namespace on cache
-        if ($cache_namespace = self::$doctrineConfig['cache_namespace']) {
-            $cache_implementation->setNamespace($cache_namespace);
-        }
-        $config->setMetadataCacheImpl($cache_implementation);
-        $config->setQueryCacheImpl($cache_implementation);
-        $config->setResultCacheImpl($cache_implementation);
+        $this->initCache($config);
 
         // mappings/metadata driver configuration
         $driver_implementation = null;
@@ -250,4 +241,35 @@ class Doctrine_ORM
         return $this->evm;
     }
 
+    /**
+     * @param Configuration $config
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
+    private function initCache(Configuration $config)
+    {
+        $type = self::$doctrineConfig['cache_implementation'];
+        $cache_class = '\Doctrine\Common\Cache\\' . $type . 'Cache';
+        $cache_implementation = null;
+        if (class_exists('Cache_' . ucfirst($type))) {
+            $cache = Cache::instance(lcfirst($type));
+            if ($cache instanceof Cache_HasDriver) {
+                $setter = 'set' . ucfirst($type);
+                $cache_implementation = new $cache_class();
+                $cache_implementation->{$setter}($cache->getDriver());
+            }
+        }
+
+        if (!$cache_implementation) {
+            $cache_implementation = new $cache_class;
+        }
+
+        // set namespace on cache
+        if ($cache_namespace = self::$doctrineConfig['cache_namespace']) {
+            $cache_implementation->setNamespace($cache_namespace);
+        }
+        $config->setMetadataCacheImpl($cache_implementation);
+        $config->setQueryCacheImpl($cache_implementation);
+        $config->setResultCacheImpl($cache_implementation);
+    }
 }

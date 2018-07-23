@@ -46,6 +46,6 @@ return [
     ],
     'debug' => true,
     'default_database_group' => 'default',
-    'cache_implementation' => 'ArrayCache',
+    'cache_implementation' => 'Array',
     'cache_namespace' => null,
 ];
