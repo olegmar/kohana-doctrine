@@ -99,6 +99,7 @@ class Doctrine_ORM
         $config->setAutoGenerateProxyClasses(true);
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
+        $config->setHydrationCacheImpl($cache);
         $config->setResultCacheImpl($cache);
 
         foreach (self::$doctrineConfig->get('string_functions', []) as $name => $className) {
@@ -107,8 +108,7 @@ class Doctrine_ORM
         foreach (self::$doctrineConfig->get('filters', []) as $name => $className) {
             $config->addFilter($name, $className);
         }
-
-
+        
         // mappings/metadata driver configuration
         $driver_implementation = null;
         switch (self::$doctrineConfig['mappings_driver']) {
